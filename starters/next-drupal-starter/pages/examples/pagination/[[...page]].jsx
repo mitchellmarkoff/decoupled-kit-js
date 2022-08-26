@@ -5,8 +5,10 @@ import {
   globalDrupalStateStores,
 } from "../../../lib/stores";
 import { BUILD_MODE } from "../../../lib/constants";
+import examplePaginationData from "../../../__tests__/data/examplePaginationData.json";
 
-import Paginator from "../../../components/paginator";
+import Paginator from "@pantheon-systems/nextjs-kit/paginator";
+// import Paginator from "../../../components/paginator";
 import Head from "next/head";
 import Layout from "../../../components/layout";
 
@@ -39,99 +41,12 @@ export default function PaginationExampleTemplate({ data, footerMenu }) {
   };
 
   return (
-    <Layout footerMenu={footerMenu}>
-      <Head>
-        <title>Pagination example</title>
-        <meta name="description" content="Powered by Pantheon Decoupled Kit" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <div className="prose container min-w-full min-h-screen max-w-screen mx-auto">
-        <main className="flex mx-auto flex-col">
-          <section className="mx-auto">
-            <h1 className="my-10">Pagination example</h1>
-            <Paginator
-              data={data}
-              itemsPerPage={itemsPerPage}
-              breakpoints={{ start: 6, end: 12, add: 6 }}
-              routing
-              Component={RenderCurrentItems}
-            />
-          </section>
-        </main>
-      </div>
-    </Layout>
+    <Paginator
+      data={examplePaginationData}
+      itemsPerPage={10}
+      breakpoints={{ start: 6, end: 12, add: 6 }}
+      routing
+      Component={RenderCurrentItems}
+    />
   );
-}
-
-export async function getStaticPaths() {
-  const store = new DrupalState({
-    apiBase: drupalUrl,
-    apiPrefix: "jsonapi",
-    defaultLocale: "en",
-    debug: process.env.DEBUG_MODE || false,
-  });
-  const data = await store.getObject({
-    objectName: "node--ds_example",
-    all: true,
-    query: `{
-      title
-      id
-      body {
-        value
-      }
-    }`,
-  });
-  const itemsPerPage = 10;
-  const totalPages = Math.ceil(data.length / itemsPerPage);
-
-  const arr = Array.from(Array(totalPages).keys());
-
-  const paths = arr.map((page) => ({
-    params: { page: [(page + 1).toString()] },
-  }));
-  // allows for  examples/pagination
-  paths.push({ params: { page: [""] } });
-
-  return {
-    paths: paths,
-    fallback: false,
-  };
-}
-
-// Using getStaticProps here with ISR will have a substantial impact on
-// performance due to the large payload.
-export async function getStaticProps(context) {
-  const exampleStore = new DrupalState({
-    apiBase: drupalUrl,
-    apiPrefix: "jsonapi",
-    defaultLocale: "en",
-    debug: process.env.DEBUG_MODE || false,
-  });
-
-  // using a query here results in a payload of 641kb, down from 2.09mb without a query!
-  const data = await exampleStore.getObject({
-    objectName: "node--ds_example",
-    query: `{
-      title
-      id
-      body {
-        value
-      }
-    }`,
-    all: true,
-    refresh: !BUILD_MODE,
-  });
-
-  const store = getCurrentLocaleStore(context.locale, globalDrupalStateStores);
-  const footerMenu = await store.getObject({
-    objectName: "menu_items--main",
-  });
-
-  return {
-    props: {
-      data,
-      footerMenu,
-    },
-    revalidate: 60,
-  };
 }

@@ -241,8 +241,11 @@ const Paginator: React.FC<PaginationProps> = ({
   return (
     <div className="max-w-screen-md">
       <h3 className="mb-8 prose-sm">
-        Page {currentPageQuery}/{totalPages}
+        This Page {currentPageQuery}/{totalPages}
       </h3>
+      <h1 className="text-6xl font-normal leading-normal mt-0 mb-2 text-pink-800">
+        Tailwind Starter Kit
+      </h1>
       <section>
         {/* Component passed in that will render the data */}
         {Component ? <Component currentItems={currentItems} /> : <RenderData />}

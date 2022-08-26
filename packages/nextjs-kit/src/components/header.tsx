@@ -36,6 +36,7 @@ const Header: React.FC<HeaderProps> = ({
     <div className="my-0 pt-10 px-5 text-xl">
       <nav>
         <ul className="flex flex-row flex-wrap sm:flex-nowrap list-none justify-between max-w-screen-sm mx-auto">
+          <h2 className="text-slate-500">Tailwind</h2>
           {navItems.map(item => {
             return (
               <li
