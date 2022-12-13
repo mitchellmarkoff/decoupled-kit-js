@@ -1,5 +1,38 @@
 # @pantheon-systems/next-drupal-starter
 
+## 3.8.0-canary.0
+
+### Minor Changes
+
+- 4d36cc3: Set IS_LIVE_ENVIRONMENT Environment Variable
+
+### Patch Changes
+
+- 1c63118: Fix 404 on preview when content is missing url alias
+- 07159e7: Support Inline Images In Drupal Body Field
+
+## 3.7.0
+
+### Minor Changes
+
+- 56898ad: Return error from getPreview catch, and redirect on that error
+- c32b6cb: Create Preview Error Route
+- b5fae1d: Removed preview-ribbon component and use the one from next-kit
+
+### Patch Changes
+
+- Updated dependencies [276c9d2]
+- Updated dependencies [b5fae1d]
+- Updated dependencies [a529abf]
+  - @pantheon-systems/nextjs-kit@1.6.0
+
+## 3.7.0-canary.2
+
+### Patch Changes
+
+- Updated dependencies [276c9d2]
+  - @pantheon-systems/nextjs-kit@1.6.0-canary.2
+
 ## 3.7.0-canary.1
 
 ### Minor Changes
