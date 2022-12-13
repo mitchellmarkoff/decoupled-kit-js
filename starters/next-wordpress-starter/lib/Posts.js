@@ -39,13 +39,16 @@ export async function getPostByUri(uri) {
 			post(id: $uriString, idType: URI) {
 				title
 				date
-				featuredImage {
-					node {
+				content
+				acfdemofields {
+					fieldGroupName
+					acfTextField
+					acfFeaturedImage {
 						altText
 						sourceUrl
 					}
+					acfContent
 				}
-				content
 			}
 		}
 	`;

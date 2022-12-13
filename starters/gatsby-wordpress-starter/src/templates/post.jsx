@@ -30,11 +30,10 @@ export const pageQuery = graphql`
 		post: wpPost(id: { eq: $id }) {
 			id
 			excerpt
-			content
-			title
 			date(formatString: "MMMM DD, YYYY")
-			featuredImage {
-				node {
+			acfdemofields {
+				acfTextField
+				acfFeaturedImage {
 					altText
 					localFile {
 						childImageSharp {
@@ -46,6 +45,7 @@ export const pageQuery = graphql`
 						}
 					}
 				}
+				acfContent
 			}
 		}
 		# this gets us the previous post by id (if it exists)

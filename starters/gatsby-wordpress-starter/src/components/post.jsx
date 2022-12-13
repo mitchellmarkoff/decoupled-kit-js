@@ -4,19 +4,21 @@ import { Link } from 'gatsby'
 import { GatsbyImage } from 'gatsby-plugin-image'
 
 const Post = ({
-	post: { title, date, content, featuredImage },
+	post: {
+		date,
+		acfdemofields: { acfTextField, acfFeaturedImage, acfContent },
+	},
 	previous,
 	next,
 }) => {
 	const imageData = {
-		gatsbyImage:
-			featuredImage?.node?.localFile?.childImageSharp.gatsbyImageData,
-		altText: featuredImage?.node?.altText || title,
+		gatsbyImage: acfFeaturedImage?.localFile?.childImageSharp.gatsbyImageData,
+		altText: acfFeaturedImage?.altText || acfTextField,
 	}
 
 	return (
 		<article className="prose lg:prose-xl mt-10 mx-auto max-w-screen-lg p-4">
-			<h1>{title}</h1>
+			<h1>{acfTextField}</h1>
 			<p className="text-sm text-gray-600">{new Date(date).toDateString()}</p>
 
 			<Link className="font-normal" to="/posts">
@@ -37,10 +39,10 @@ const Post = ({
 				)}
 			</div>
 
-			{content ? (
+			{acfContent ? (
 				<div
 					className="break-words mt-12"
-					dangerouslySetInnerHTML={{ __html: content }}
+					dangerouslySetInnerHTML={{ __html: acfContent }}
 				/>
 			) : (
 				<p>Sorry, no page data was found at this route.</p>
